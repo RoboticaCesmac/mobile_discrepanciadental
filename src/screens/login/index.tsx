@@ -16,35 +16,53 @@ import Logo from "../../../assets/svgs/Logo.svg";
 import SigninButton from "../../../assets/svgs/SigninButton.svg";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { ICredentials } from "../../app/interfaces";
 
+
 //fonts
-import * as Font from "expo-font";
+import { useFonts } from 'expo-font';
+import {
+  Ubuntu_400Regular,
+} from '@expo-google-fonts/ubuntu';
+
 import AppLoading from "expo-app-loading";
 
 export default function LoginScreen() {
-  //variables
-  var isEmailValid = true;
-  var isPasswordValid = true;
+  const [font, setFont] = useState<string>("sans-serif-thin")
+  const [styleInputPassword, setStyleInputPassword] = useState<any>(styles.input)
+  const [styleInputEmail, setStyleInputEmail] = useState<any>(styles.input)
+  const [fontsLoaded] = useFonts({
+    'Ubuntu-Regular': Ubuntu_400Regular,
+  });
+
+  const load = async () =>{
+    await new Promise((resolve)=>setTimeout(resolve, 500));
+    setFont('Ubuntu-Regular');
+  }
+
+  useEffect(() => {
+      load()
+  }, []);
+
 
   const passwordRegex = new RegExp(
     "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^ws]).{8,}$"
   );
   const emailRegex = new RegExp(
-    "^(?=[a-z][a-z0-9@._-]{5,40}$)[a-z0-9._-]{1,20}@(?:(?=[a-z0-9-]{1,15}.)[a-z0-9]+(?:-[a-z0-9]+)*.){1,2}[a-z]{2,6}$"
+    "^(?=[a-z][a-z0-9@._-]{5,40}$)[a-z0-9._-]{1,30}@(?:(?=[a-z0-9-]{1,15}.)[a-z0-9]+(?:-[a-z0-9]+)*.){1,2}[a-z]{2,6}$"
   );
   const validationSchema = Yup.object({
-    email: Yup.string().email("Insira um email").required("Email obrigatório"),
-    password: Yup.string()
-      .min(8, "Pelo menos 8 caracteres")
-      .required("Senha obrigatória")
-      .matches(
-        passwordRegex,
-        "A senha deve conter 1 letra minuscula, 1 maiuscula, 1 numero, e 1 caractere especial"
-      ),
+    // email: Yup.string().email("Insira um email").required("Email obrigatório"),
+    // password: Yup.string()
+    //   .min(8, "Pelo menos 8 caracteres")
+    //   .required("Senha obrigatória")
+    //   .matches(
+    //     passwordRegex,
+    //     "A senha deve conter 1 letra minuscula, 1 maiuscula, 1 numero, e 1 caractere especial"
+    //   ),
   });
   const navigation = useNavigation();
   //     const [email, setEmail] = useState('');
@@ -53,46 +71,44 @@ export default function LoginScreen() {
 
   //functions
   const validateLogin = (credentials: ICredentials) => {
-    console.log(credentials.email);
-    console.log(credentials.password);
+    console.log(`email: ${credentials.email}`);
+    console.log(`password: ${credentials.password}`);
     if (passwordRegex.test(credentials.password) &&
-        emailRegex.test(credentials.email)
-    ) {
-      console.log("Password is valid");
-      console.log("Email is valid");
-      isEmailValid = true;
-      isPasswordValid = true;
-    }
-    else if(passwordRegex.test(credentials.password))
-    {
+        emailRegex.test(credentials.email)) 
+      {
+        setStyleInputEmail(styles.input);
+        setStyleInputPassword(styles.input);
         console.log("Password is valid");
-        isPasswordValid = true;
-
-        if(emailRegex.test(credentials.email))
-        {
-            console.log("Email is valid");
-            isEmailValid = true;
-        }else{
-            console.log("Email is invalid");
-            isEmailValid = false;
-        }
+        console.log("Email is valid");
     }
-    else if(emailRegex.test(credentials.email))
-    {
-        console.log("email is valid");
-        isEmailValid = true;
-
-        if(passwordRegex.test(credentials.password))
-            console.log("password is valid");
-            isPasswordValid = true;
-        }else{
-            console.log("password is invalid");
-            isPasswordValid = false;
+    if(credentials.email == "" && credentials.password == ""){
+        setStyleInputEmail(styles.input);
+        setStyleInputPassword(styles.input);
+    }
+    if(!passwordRegex.test(credentials.password)){
+        console.log("password is invalid");
+        setStyleInputPassword(styles.errorBorder);
     }
 
- //navigation.navigate('');
-  };
+    if(!emailRegex.test(credentials.email)){
+        setStyleInputEmail(styles.errorBorder);
+    }
 
+    if(credentials.email == null && passwordRegex.test(credentials.password)){
+      setStyleInputEmail(styles.input);
+      setStyleInputPassword(styles.input);
+    }
+
+    if(emailRegex.test(credentials.email)){
+      setStyleInputEmail(styles.input);
+    }
+
+    if(passwordRegex.test(credentials.password)){
+      setStyleInputPassword(styles.input);
+    }
+
+
+  }
   const loadSignupScreen = () => {
     console.log("loadSignupScreen foi chamada");
     //navigation.navigate('');
@@ -127,7 +143,7 @@ export default function LoginScreen() {
                 <View style={styles.card}>
                   <Logo width={123} height={124} />
                   <Text
-                    style={[styles.header, { fontFamily: "Ubuntu-Regular" }]}
+                    style={[styles.header, { fontFamily: font }]}
                   >
                     Seja Bem Vindo
                   </Text>
@@ -136,8 +152,8 @@ export default function LoginScreen() {
                     onChangeText={handleChange("email")}
                     placeholder="E-mail"
                     style={[
-                      errors.email ? styles.errorBorder : styles.input,
-                      { fontFamily: "Ubuntu-Regular" },
+                      styleInputEmail,
+                      { fontFamily: font },
                     ]}
                   ></TextInput>
                   {errors.email && touched.email && (
@@ -149,8 +165,8 @@ export default function LoginScreen() {
                     secureTextEntry={true}
                     placeholder="Senha"
                     style={[
-                      errors.password ? styles.errorBorder : styles.input,
-                      { fontFamily: "Ubuntu-Regular" },
+                      styleInputPassword,
+                      { fontFamily: font },
                     ]}
                   ></TextInput>
                   {errors.password && touched.password && (
