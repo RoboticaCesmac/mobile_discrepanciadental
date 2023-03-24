@@ -55,7 +55,34 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         borderWidth: 1,
         borderStyle:  'solid',
-        borderColor: '#FF0000'
+        borderColor: '#ff9494'
+    },
+    successBorder:{
+        backgroundColor: "#eeeee4",
+        width: 343,
+        height: 54,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderStyle:  'solid',
+        borderColor: '#4bb543',
+    },
+    success: {
+        backgroundColor: 'green',
+        color: 'white',
+        fontSize: 12,
+        padding:2,
+        borderRadius: 2,
+        marginBottom: 10
+    },
+    error: {
+        backgroundColor: '#ff9494',
+        color: 'white',
+        fontSize: 12,
+        padding:2,
+        borderRadius: 2,
+        marginBottom: 30
     }
 
 });

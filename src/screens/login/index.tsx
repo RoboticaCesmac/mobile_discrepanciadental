@@ -17,119 +17,86 @@ import SigninButton from "../../../assets/svgs/SigninButton.svg";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
 import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
 import { Formik } from "formik";
 import { ICredentials } from "../../app/interfaces";
 
-
 //fonts
-import { useFonts } from 'expo-font';
-import {
-  Ubuntu_400Regular,
-} from '@expo-google-fonts/ubuntu';
+import { useFonts } from "expo-font";
+import { Ubuntu_400Regular } from "@expo-google-fonts/ubuntu";
 
 import AppLoading from "expo-app-loading";
 
 export default function LoginScreen() {
-  const [font, setFont] = useState<string>("sans-serif-thin")
-  const [styleInputPassword, setStyleInputPassword] = useState<any>(styles.input)
-  const [styleInputEmail, setStyleInputEmail] = useState<any>(styles.input)
+  var validator = require("validator");
+  const [font, setFont] = useState<string>("sans-serif-thin");
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+  const [emailSuccessMessage, setEmailSuccessMessage] = useState<string>("");
+  const [passwordSuccessMessage, setPasswordSuccessMessage] =
+    useState<string>("");
+
   const [fontsLoaded] = useFonts({
-    'Ubuntu-Regular': Ubuntu_400Regular,
+    "Ubuntu-Regular": Ubuntu_400Regular,
   });
 
-  const load = async () =>{
-    await new Promise((resolve)=>setTimeout(resolve, 500));
-    setFont('Ubuntu-Regular');
-  }
+  const load = async () => {
+    setFont("Ubuntu-Regular");
+  };
 
   useEffect(() => {
-      load()
+    load();
   }, []);
 
-
-  const passwordRegex = new RegExp(
-    "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^ws]).{8,}$"
-  );
-  const emailRegex = new RegExp(
-    "^(?=[a-z][a-z0-9@._-]{5,40}$)[a-z0-9._-]{1,30}@(?:(?=[a-z0-9-]{1,15}.)[a-z0-9]+(?:-[a-z0-9]+)*.){1,2}[a-z]{2,6}$"
-  );
-  const validationSchema = Yup.object({
-    // email: Yup.string().email("Insira um email").required("Email obrigatório"),
-    // password: Yup.string()
-    //   .min(8, "Pelo menos 8 caracteres")
-    //   .required("Senha obrigatória")
-    //   .matches(
-    //     passwordRegex,
-    //     "A senha deve conter 1 letra minuscula, 1 maiuscula, 1 numero, e 1 caractere especial"
-    //   ),
-  });
   const navigation = useNavigation();
-  //     const [email, setEmail] = useState('');
-  //     const [password, setPassword] = useState('');
-  const [isFontLoaded, setIsFontLoaded] = useState(false);
-
   //functions
   const validateLogin = (credentials: ICredentials) => {
-    console.log(`email: ${credentials.email}`);
-    console.log(`password: ${credentials.password}`);
-    if (passwordRegex.test(credentials.password) &&
-        emailRegex.test(credentials.email)) 
-      {
-        setStyleInputEmail(styles.input);
-        setStyleInputPassword(styles.input);
-        console.log("Password is valid");
-        console.log("Email is valid");
-    }
-    if(credentials.email == "" && credentials.password == ""){
-        setStyleInputEmail(styles.input);
-        setStyleInputPassword(styles.input);
-    }
-    if(!passwordRegex.test(credentials.password)){
-        console.log("password is invalid");
-        setStyleInputPassword(styles.errorBorder);
+    // console.log("Hello world");
+    console.log(credentials.password);
+
+    //VALIDATING PASSWORD INPUT
+    if (validator.isEmpty(credentials.password)) {
+      setPasswordErrorMessage("Campo obrigatório");
+      setStyleInputPassword(styles.errorBorder);
+    } else if (credentials.password.length < 8) {
+      setPasswordErrorMessage("Pelo menos 8 caracteres");
+      setStyleInputPassword(styles.errorBorder);
+    } else if (validator.isStrongPassword(credentials.password)) {
+      setPasswordErrorMessage("");
+      setStyleInputPassword(styles.successBorder);
+    } else {
+      setPasswordErrorMessage("Senha inválida");
+      setStyleInputPassword(styles.errorBorder);
     }
 
-    if(!emailRegex.test(credentials.email)){
-        setStyleInputEmail(styles.errorBorder);
+    //VALIDATING EMAIL INPUT
+    if (validator.isEmail(credentials.email)) {
+      console.log("Email valido");
+      setStyleInputEmail(styles.successBorder);
+      setEmailErrorMessage("");
+    } else if (validator.isEmpty(credentials.email)) {
+      setStyleInputEmail(styles.errorBorder);
+      setEmailErrorMessage("Campo obrigatorio");
+    } else {
+      setEmailErrorMessage("Email inválido");
+      setStyleInputEmail(styles.errorBorder);
     }
-
-    if(credentials.email == null && passwordRegex.test(credentials.password)){
-      setStyleInputEmail(styles.input);
-      setStyleInputPassword(styles.input);
-    }
-
-    if(emailRegex.test(credentials.email)){
-      setStyleInputEmail(styles.input);
-    }
-
-    if(passwordRegex.test(credentials.password)){
-      setStyleInputPassword(styles.input);
-    }
-
-
-  }
+  };
   const loadSignupScreen = () => {
     console.log("loadSignupScreen foi chamada");
     //navigation.navigate('');
   };
+  //SETTING THE BORDER COLOR OF THE INPUTS
+  const [styleInputPassword, setStyleInputPassword] = useState<any>(
+    styles.input
+  );
+  const [styleInputEmail, setStyleInputEmail] = useState<any>(styles.input);
 
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
-      validationSchema={validationSchema}
       onSubmit={validateLogin}
     >
-      {({
-        values,
-        errors,
-        touched,
-        isSubmitting,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        setFieldValue,
-      }) => (
+      {({ values, handleChange }) => (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
           <View style={styles.container}>
             <KeyboardAvoidingView>
@@ -142,36 +109,40 @@ export default function LoginScreen() {
               >
                 <View style={styles.card}>
                   <Logo width={123} height={124} />
-                  <Text
-                    style={[styles.header, { fontFamily: font }]}
-                  >
+                  <Text style={[styles.header, { fontFamily: font }]}>
                     Seja Bem Vindo
                   </Text>
-                  <TextInput
-                    value={values.email}
-                    onChangeText={handleChange("email")}
-                    placeholder="E-mail"
-                    style={[
-                      styleInputEmail,
-                      { fontFamily: font },
-                    ]}
-                  ></TextInput>
-                  {errors.email && touched.email && (
-                    <Text style={styles.fail}>{errors.email}</Text>
-                  )}
-                  <TextInput
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    secureTextEntry={true}
-                    placeholder="Senha"
-                    style={[
-                      styleInputPassword,
-                      { fontFamily: font },
-                    ]}
-                  ></TextInput>
-                  {errors.password && touched.password && (
-                    <Text style={styles.fail}>{errors.password}</Text>
-                  )}
+                  <View style={{ alignItems: "center" }}>
+                    <TextInput
+                      value={values.email}
+                      onChangeText={handleChange("email")}
+                      placeholder="exemplo123@email.com"
+                      style={[styleInputEmail, { fontFamily: font }]}
+                    ></TextInput>
+                    {emailErrorMessage.length > 0 && (
+                      <Text style={styles.error}>{emailErrorMessage}</Text>
+                    )}
+                    {emailSuccessMessage.length > 0 && (
+                      <Text style={styles.success}>{emailSuccessMessage}</Text>
+                    )}
+                  </View>
+                  <View style={{ alignItems: "center" }}>
+                    <TextInput
+                      value={values.password}
+                      onChangeText={handleChange("password")}
+                      secureTextEntry={true}
+                      placeholder="123abcAB#"
+                      style={[styleInputPassword, { fontFamily: font }]}
+                    ></TextInput>
+                    {passwordSuccessMessage.length > 0 && (
+                      <Text style={styles.success}>
+                        {passwordSuccessMessage}
+                      </Text>
+                    )}
+                    {passwordErrorMessage.length > 0 && (
+                      <Text style={styles.error}>{passwordErrorMessage}</Text>
+                    )}
+                  </View>
                   <Pressable
                     onPress={() =>
                       validateLogin({
