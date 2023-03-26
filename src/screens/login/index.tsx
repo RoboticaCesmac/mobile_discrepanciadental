@@ -19,33 +19,24 @@ import { styles } from "./styles";
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { ICredentials } from "../../app/interfaces";
-
-//fonts
-import { useFonts } from "expo-font";
-import { Ubuntu_400Regular } from "@expo-google-fonts/ubuntu";
-
-import AppLoading from "expo-app-loading";
+import * as NavigationBar from "expo-navigation-bar";
 
 export default function LoginScreen() {
   var validator = require("validator");
-  const [font, setFont] = useState<string>("sans-serif-thin");
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
   const [emailSuccessMessage, setEmailSuccessMessage] = useState<string>("");
   const [passwordSuccessMessage, setPasswordSuccessMessage] =
     useState<string>("");
 
-  const [fontsLoaded] = useFonts({
-    "Ubuntu-Regular": Ubuntu_400Regular,
-  });
-
-  const load = async () => {
-    setFont("Ubuntu-Regular");
-  };
 
   useEffect(() => {
-    load();
+    navigationConfig();
   }, []);
+
+  const navigationConfig = async () => {
+    NavigationBar.setVisibilityAsync("visible");
+  };
 
   const navigation = useNavigation();
   //functions
@@ -108,8 +99,9 @@ export default function LoginScreen() {
                 persistentScrollbar={true}
               >
                 <View style={styles.card}>
+                  <StatusBar style="light" />
                   <Logo width={123} height={124} />
-                  <Text style={[styles.header, { fontFamily: font }]}>
+                  <Text style={[styles.header, { fontFamily: "sans-serif" }]}>
                     Seja Bem Vindo
                   </Text>
                   <View style={{ alignItems: "center" }}>
@@ -117,7 +109,7 @@ export default function LoginScreen() {
                       value={values.email}
                       onChangeText={handleChange("email")}
                       placeholder="exemplo123@email.com"
-                      style={[styleInputEmail, { fontFamily: font }]}
+                      style={[styleInputEmail, { fontFamily: "sans-serif" }]}
                     ></TextInput>
                     {emailErrorMessage.length > 0 && (
                       <Text style={styles.error}>{emailErrorMessage}</Text>
@@ -132,7 +124,7 @@ export default function LoginScreen() {
                       onChangeText={handleChange("password")}
                       secureTextEntry={true}
                       placeholder="123abcAB#"
-                      style={[styleInputPassword, { fontFamily: font }]}
+                      style={[styleInputPassword, { fontFamily: "sans-serif" }]}
                     ></TextInput>
                     {passwordSuccessMessage.length > 0 && (
                       <Text style={styles.success}>
@@ -157,11 +149,19 @@ export default function LoginScreen() {
                     style={styles.btnSignup}
                     onPress={() => console.log(values.email, values.password)}
                   >
-                    <Text>Cadastre-se</Text>
+                    <Text
+                      style={[
+                        styles.signupBtnText,
+                        { fontFamily: "sans-serif" },
+                      ]}
+                    >
+                      Cadastre-se
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </ScrollView>
             </KeyboardAvoidingView>
+            <StatusBar style="dark" />
           </View>
         </SafeAreaView>
       )}

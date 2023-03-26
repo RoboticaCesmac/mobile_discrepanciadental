@@ -4,12 +4,20 @@
     "slug": "DiscrepanciaDental",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/imagens/tooth.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/imagens/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#C2185B",
+      "hidden": true
+    },
+    "androidNavigationBar": {
+      "visible": "leanback",
+      "backgroundColor": "lightgray"
     },
     "assetBundlePatterns": [
       "**/*"

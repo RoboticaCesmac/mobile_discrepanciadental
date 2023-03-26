@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#fff",
     },
     card: {
         height: "80%", width: "100%",
@@ -32,12 +33,17 @@ export const styles = StyleSheet.create({
     btnSignup:{
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: 'fff',
+        backgroundColor: '#357180',
         borderWidth:  1,
         borderStyle:  'solid',
+        borderRadius: 6,
         marginTop: 20,
-        width: 138,
-        height: 28
+        width: 343,
+        height: 54,
+    },
+    signupBtnText:{
+        color: "#ffffff",
+        fontSize: 16
     },
     fail:{
         color: 'white',
