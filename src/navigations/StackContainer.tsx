@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from "../screens/login";
+import {AuthenticationScreen} from "../screens/home/AuthenticationScreen";
 
 
 const Stack = createStackNavigator();
@@ -11,7 +11,12 @@ export default function MainNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name='Entrar' component={LoginScreen} />
+                <Stack.Screen name='Authentication' component={AuthenticationScreen} 
+                    options={{
+                        title: "Authentication",
+                        headerShown: false
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
