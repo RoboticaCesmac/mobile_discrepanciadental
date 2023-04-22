@@ -8,6 +8,20 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#fff",
     },
+    formContainer: {
+        marginBottom: 16,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 32,
+    },
+    logo:{
+        width: 100,
+        height: 100,
+        position: 'absolute',
+        top: 70,
+    },
     card: {
         height: "80%", width: "100%",
         borderRadius: 15,
@@ -18,7 +32,6 @@ export const styles = StyleSheet.create({
     },
     header: {
         fontSize: 32,
-        fontFamily: 'Ubuntu-Regular',
         marginBottom: 10
     },
     input: {
@@ -26,22 +39,22 @@ export const styles = StyleSheet.create({
         width: 343,
         height: 54,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 10,
         marginBottom: 10,
-
+        marginTop: 10
     },
-    btnSignup:{
+    submitButton:{
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#357180',
         borderWidth:  1,
         borderStyle:  'solid',
-        borderRadius: 6,
+        borderRadius: 10,
         marginTop: 20,
         width: 343,
         height: 54,
     },
-    signupBtnText:{
+    submitButtonText:{
         color: "#ffffff",
         fontSize: 16
     },
@@ -89,7 +102,7 @@ export const styles = StyleSheet.create({
         padding:2,
         borderRadius: 2,
         marginBottom: 30
-    }
+    },
 
 });
 
