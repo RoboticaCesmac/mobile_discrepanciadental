@@ -28,10 +28,10 @@ const AuthenticationScreen = ({navigation}: Props) => {
           console.log(JSON.stringify(err));
           switch(err.code){
             case 'auth/user-not-found':
-              Alert.alert('Ocorreu um erro', 'Usuário ou senha incorreta')
+              Alert.alert('Verifique suas credenciais', 'Usuário ou senha incorreta')
               break;
             case 'auth/wrong-password':
-              Alert.alert('Ocorreu um erro', 'Usuário ou senha incorreta')
+              Alert.alert('Verifique suas credenciais', 'Usuário ou senha incorreta')
               break;
             case 'auth/too-many-requests':
               Alert.alert('Ocorreu um erro', 'Muitas tentativas. Aguarde antes de tentar novamente.')

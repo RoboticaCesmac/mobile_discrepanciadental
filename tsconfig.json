@@ -4,12 +4,14 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "strict": true,
-    "baseUrl": "./app",
+    "typeRoots": ["./src/types"],
+    "baseUrl": ".",
     "paths": {
-      "@assets/*": ["assets/*"],
-      "@screens/*": ["screens/*"],
-      "@config/*": ["config/*"],
-      "@components/*": ["components/*"]
+      "@assets/*": ["app/assets/*"],
+      "@screens/*": ["app/screens/*"],
+      "@config/*": ["app/config/*"],
+      "@components/*": ["app/components/*"],
+      "@env": ["node_modules/react-native-dotenv/*"]
     }
   }
 }
