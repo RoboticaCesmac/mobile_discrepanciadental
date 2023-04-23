@@ -6,12 +6,15 @@ import { AuthValidation } from './Validation';
 import { styles } from "./styles";
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'navigations/StackContainer';
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../config/firebase';
 
 type AuthScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   navigation: AuthScreenNavigationProp;
 };
+
 interface FormValues {
   email: string;
   password: string;
@@ -19,9 +22,24 @@ interface FormValues {
 
 const AuthenticationScreen = ({navigation}: Props) => {
     const handleAuth = (values: FormValues) => {
-        Alert.alert('Logged successfully', JSON.stringify(values))
-        console.log(JSON.stringify(values));
-        navigation.navigate('Home');
+        signInWithEmailAndPassword(auth, values.email, values.password)
+        .then(() => navigation.navigate('Home'))
+        .catch(err => {
+          console.log(JSON.stringify(err));
+          switch(err.code){
+            case 'auth/user-not-found':
+              Alert.alert('Ocorreu um erro', 'Usuário ou senha incorreta')
+              break;
+            case 'auth/wrong-password':
+              Alert.alert('Ocorreu um erro', 'Usuário ou senha incorreta')
+              break;
+            case 'auth/too-many-requests':
+              Alert.alert('Ocorreu um erro', 'Muitas tentativas. Aguarde antes de tentar novamente.')
+              break;
+            default:
+              Alert.alert('Ocorreu um erro', err.code)
+          }
+        })
     };
     
     return (
