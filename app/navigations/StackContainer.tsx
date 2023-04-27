@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { RegisterScreen } from '@screens/RegisterScreen';
 import { LoadingScreen, AuthenticationScreen, HomeScreen } from "@screens/index";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -20,6 +21,14 @@ export default function MainNavigation() {
                     component={LoadingScreen} 
                     options={{
                         title: "Loading",
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen 
+                    name='Register' 
+                    component={RegisterScreen} 
+                    options={{
+                        title: "Register",
                         headerShown: false
                     }}
                 />
