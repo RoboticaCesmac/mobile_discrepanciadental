@@ -5,7 +5,7 @@ import { AuthValidation } from './Validation';
 
 import { styles } from "./styles";
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from 'navigations/StackContainer';
+import { RootStackParamList } from '../navigations/StackContainer';
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase';
 
@@ -25,12 +25,8 @@ const AuthenticationScreen = ({navigation}: Props) => {
         signInWithEmailAndPassword(auth, values.email, values.password)
         .then(() => navigation.navigate('Home'))
         .catch(err => {
-          console.log(JSON.stringify(err));
           switch(err.code){
-            case 'auth/user-not-found':
-              Alert.alert('Verifique suas credenciais', 'Usuário ou senha incorreta')
-              break;
-            case 'auth/wrong-password':
+            case 'auth/user-not-found' || 'auth/wrong-password':
               Alert.alert('Verifique suas credenciais', 'Usuário ou senha incorreta')
               break;
             case 'auth/too-many-requests':
