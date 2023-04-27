@@ -1,14 +1,17 @@
 {
   "extends": "expo/tsconfig.base",
-  "include": ["**/*.tsx", "src/react-app-env.d.ts"],
+  "include": ["**/*.tsx", "app/src/react-app-env.d.ts"],
   "compilerOptions": {
     "jsx": "react-jsx",
     "strict": true,
-    "baseUrl": "src",
+    "typeRoots": ["./src/types"],
+    "baseUrl": ".",
     "paths": {
-      "@assets/*": ["../assets/*"],
-      "@common/*": ["screens/common/*"],
-      "@screens/*": ["screens/*"]
+      "@assets/*": ["app/assets/*"],
+      "@screens/*": ["app/screens/*"],
+      "@config/*": ["app/config/*"],
+      "@components/*": ["app/components/*"],
+      "@env": ["node_modules/react-native-dotenv/*"]
     }
   }
 }

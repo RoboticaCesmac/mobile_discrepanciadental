@@ -7,10 +7,20 @@ module.exports = function(api) {
         "module-resolver",
         {
           alias: {
-            "@common": "./screens/common",
-            "@assets": "./assets",
-            "@screens": "./screens"
+            "@common": "./app/screens/common",
+            "@assets": "./app/assets",
+            "@screens": "./app/screens",
+            "@config": "./app/config",
+            "@components": "./app/components"
           }
+        }
+      ],
+      [
+        "module:react-native-dotenv", 
+        {
+          "envName": "APP_ENV",
+          "moduleName": "@env",
+          "path": ".env",
         }
       ]
     ]

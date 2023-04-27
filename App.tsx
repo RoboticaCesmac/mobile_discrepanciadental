@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import MainNavigation from './src/navigations/StackContainer';
+import MainNavigation from './app/navigations/StackContainer';
 import 'react-native-gesture-handler';
 
 export default function App() {
