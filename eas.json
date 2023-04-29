@@ -1,0 +1,24 @@
+{
+  "cli": {
+    "version": ">= 3.10.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    //flag -p = production; android = plataforma
+    //comando usado para gerar um APK: eas build -p android --profile preview // É gerado para desenvolvimento/testes
+    //comando usado para gerar um AAB: eas build -p android // OBs - O aab é padrao e deve ser gerado somente caso a aplicacao seja publicada na Play Store
+    //Perfil usado para gerar um APK // Obs - Por padräo, o eas gerá um AAB
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}

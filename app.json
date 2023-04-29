@@ -17,7 +17,7 @@
     },
     "androidNavigationBar": {
       "visible": "leanback",
-      "backgroundColor": "lightgray"
+      "backgroundColor": "#lightgray"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -33,6 +33,11 @@
     },
     "web": {
       "favicon": "./app/assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "52af4d5b-658e-4cb0-ad7b-4e394fcce1f1"
+      }
     }
   }
 }
