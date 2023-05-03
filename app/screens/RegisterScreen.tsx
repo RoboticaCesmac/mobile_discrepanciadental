@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, StatusBar } from 'react-native';
 import { Formik } from 'formik';
 import FormField from '../components/FormField';
 import { RegisterValidation } from './Validation';
@@ -9,6 +9,9 @@ import { RootStackParamList } from 'app/navigations/StackContainer';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase';
+import { useEffect } from 'react';
+import { displayNavigationBar } from '../helpers/displayNavigationBar';
+
 
 type AuthScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -22,6 +25,11 @@ interface FormValues {
 }
 
 const RegisterScreen = ({navigation}: Props) => {
+
+  useEffect(() => {
+    displayNavigationBar();
+  }, []);
+
     const handleRegistration = (values: FormValues) => {
       createUserWithEmailAndPassword(auth, values.email, values.password)
       .then(() => navigation.navigate('Home'))
@@ -31,9 +39,9 @@ const RegisterScreen = ({navigation}: Props) => {
             Alert.alert('Ocorreu um erro', err.code)
         }
       });
-      
+
     };
-    
+
     return (
       <View style={styles.container}>
           <Text style={styles.title}>Registre-se</Text>
@@ -79,6 +87,7 @@ const RegisterScreen = ({navigation}: Props) => {
               </View>
             )}
           </Formik>
+          <StatusBar barStyle="dark-content" />
       </View>
     );
 };
