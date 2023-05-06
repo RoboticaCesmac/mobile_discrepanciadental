@@ -3,6 +3,9 @@ import {
   SafeAreaView,
   Text,
   Button,
+  FlatList,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { signOut } from "firebase/auth";
 import { auth, database } from "@config/firebase";
@@ -15,9 +18,11 @@ import {
   getDocs,
 } from "firebase/firestore";
 import React from "react";
+import { Ionicons } from '@expo/vector-icons';
 
 const HomeScreen = ({ navigation }: any) => {
 
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     getDocs<DocumentData>(collection(database, "patients"))
@@ -33,13 +38,13 @@ const HomeScreen = ({ navigation }: any) => {
           };
           patients.push(patient);
         });
+        setData(patients);
         console.log(patients);
       })
       .catch((e) => {
         console.log("Home, getUsers: " + e);
       });
   }, []);
-
 
   var name = auth.currentUser?.email;
   const logout = async () => {
@@ -52,14 +57,52 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
+  	  //funcao de teste, no momento, mas quando implementada
+  //terá a responsabilidade de filtrar pacientes pelo nome
+  //Obs: ignore esse nome.
+  const routeUser = ({ item }: any) => {
+    console.log("RouteUser");
+  };
+
+  //Cada item é um objeto USER.
+  //Deixei o nome 'item' porque é o termo usado pela FlatList
+  //Esta funcao/componente é chamada pelo component FlatList lá embaixo
+  const renderItem = ({ item }: any) => {
+    return <Item item={item} onPress={() => routeUser(item)} />;
+  };
+
+  //esta funcao/componente é referenciada em 'renderItem'
+  const Item = ({ item, onPress }: any) => {
+    return (
+      <TouchableOpacity
+        style={styles.listItem}
+        onPress={onPress}
+      >
+        <View
+          style={styles.wrapper_icon_text}
+        >
+          <Ionicons style={{alignSelf:"center"}} name="person" size={24} color="black" />
+          <View style={{ marginLeft: 30 }}>
+            <Text style={styles.textName}>{item.name}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}
     >
-      <Text style={styles.header}>{name}</Text>
-
-      <Button title="Log out" onPress={logout} />
-      <Button title="Go Back" onPress={() => navigation.navigate('Authentication')} />
+      <Text style={styles.header}>Pacientes</Text>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.flatList}
+      />
+      {/* <Button title="Log out" onPress={logout} />
+      <Button title="Go Back" onPress={() => navigation.navigate('Authentication')} /> */}
     </SafeAreaView>
   );
 };
