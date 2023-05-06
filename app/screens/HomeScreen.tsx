@@ -6,6 +6,8 @@ import {
   FlatList,
   TouchableOpacity,
   View,
+  TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { signOut } from "firebase/auth";
 import { auth, database } from "@config/firebase";
@@ -23,8 +25,12 @@ import { Ionicons } from '@expo/vector-icons';
 const HomeScreen = ({ navigation }: any) => {
 
   const [data, setData] = useState<any[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsLoading(true);
     getDocs<DocumentData>(collection(database, "patients"))
       .then((docs: QuerySnapshot<DocumentData>) => {
         let patients: any[] = [];
@@ -39,12 +45,35 @@ const HomeScreen = ({ navigation }: any) => {
           patients.push(patient);
         });
         setData(patients);
+        setIsLoading(false);
         console.log(patients);
       })
       .catch((e) => {
+        setIsLoading(false);
+        setError(true);
         console.log("Home, getUsers: " + e);
       });
   }, []);
+
+
+  //COMPONENTES PARA EXIBIR MENSAGEM DE ERRO E INDICADOR DE LOADING
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="5500dc" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 18 }}>
+          Error fetching data...Check your network connection!
+        </Text>
+      </View>
+    );
+  }
 
   var name = auth.currentUser?.email;
   const logout = async () => {
@@ -95,6 +124,15 @@ const HomeScreen = ({ navigation }: any) => {
       style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}
     >
       <Text style={styles.header}>Pacientes</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(s) => {
+          setSearch(s);
+        }}
+        autoCapitalize="none"
+        value={search}
+        placeholder="Pesquise aqui..."
+      />
       <FlatList
         data={data}
         renderItem={renderItem}
