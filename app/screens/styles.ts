@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
@@ -31,8 +31,11 @@ export const styles = StyleSheet.create({
         padding: "5%",
     },
     header: {
+        textAlign: 'center',
         fontSize: 32,
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 10,
+        width: Dimensions.get('window').width,
     },
     input: {
         backgroundColor: "#eeeee4",
@@ -103,7 +106,43 @@ export const styles = StyleSheet.create({
         borderRadius: 2,
         marginBottom: 30
     },
-
+    textName: {
+        fontSize: 20,
+        fontWeight: '700',
+        marginLeft: 30
+      },
+    flatList: {
+        justifyContent: "flex-start",
+        flexDirection: "column",
+        alignContent: "space-between",
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#ff9494",
+        alignItems: "center",
+        width: Dimensions.get("window").width - 120,
+        height: Dimensions.get("window").height
+    },
+    listItem: {
+        height: 70,
+        width: Dimensions.get("window").width - 120,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#00ff00",
+        padding: 20,
+    },
+    wrapper_icon_text:{
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#00ffff",
+        flexDirection: "row",
+        height: 25
+    },
+    scrollView: {
+        paddingBottom: 60,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#ff00f",
+    }
 });
 
 export default styles;
