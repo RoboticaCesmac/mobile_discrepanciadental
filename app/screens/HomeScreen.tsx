@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   View,
+  TextInput,
 } from "react-native";
 import { signOut } from "firebase/auth";
 import { auth, database } from "@config/firebase";
@@ -23,6 +24,7 @@ import { Ionicons } from '@expo/vector-icons';
 const HomeScreen = ({ navigation }: any) => {
 
   const [data, setData] = useState<any[]>([]);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     getDocs<DocumentData>(collection(database, "patients"))
@@ -45,6 +47,7 @@ const HomeScreen = ({ navigation }: any) => {
         console.log("Home, getUsers: " + e);
       });
   }, []);
+
 
   var name = auth.currentUser?.email;
   const logout = async () => {
@@ -95,6 +98,15 @@ const HomeScreen = ({ navigation }: any) => {
       style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}
     >
       <Text style={styles.header}>Pacientes</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(s) => {
+          setSearch(s);
+        }}
+        autoCapitalize="none"
+        value={search}
+        placeholder="Pesquise aqui..."
+      />
       <FlatList
         data={data}
         renderItem={renderItem}
