@@ -107,41 +107,52 @@ export const styles = StyleSheet.create({
         marginBottom: 30
     },
     textName: {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: '700',
-        marginLeft: 30
+        // borderWidth: 1,
+        // borderStyle: "solid",
+        // borderColor: "#f901111"
       },
     flatList: {
         justifyContent: "flex-start",
         flexDirection: "column",
-        alignContent: "space-between",
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "#ff9494",
+        alignContent: 'space-between',
+        // borderWidth: 5,
+        // borderStyle: "solid",
+        // borderColor: "#ff9494",
         alignItems: "center",
         width: Dimensions.get("window").width - 120,
-        height: Dimensions.get("window").height
     },
-    listItem: {
+    btnLoadResults: {
         height: 70,
-        width: Dimensions.get("window").width - 120,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "#00ff00",
+        width: 70,
+        borderRadius: 20,
+        // borderWidth: 1,
+        // borderStyle: "solid",
+        // borderColor: "#00ff00",
         padding: 20,
+        alignSelf:'flex-end'
     },
-    wrapper_icon_text:{
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "#00ffff",
+    wrapperIconTextBtnLoadResults:{
         flexDirection: "row",
-        height: 25
-    },
-    scrollView: {
-        paddingBottom: 60,
+        justifyContent: "space-around",
+        backgroundColor:'#D9D9D9',
+        borderRadius: 10,
         borderWidth: 1,
         borderStyle: "solid",
-        borderColor: "#ff00f",
+        borderColor: "#000000",
+        width: Dimensions.get("window").width - 120,
+        marginBottom: 10,
+    },
+    wrapperText:{
+        paddingLeft: 10,
+        flexDirection: "column",
+        justifyContent: "center",
+        // borderWidth: 1,
+        // borderStyle: "solid",
+        // borderColor: "orange",
+        height: 70,
+        width: Dimensions.get("window").width / 3
     }
 });
 
