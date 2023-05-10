@@ -8,53 +8,38 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import { signOut } from "firebase/auth";
 import { auth, database } from "@config/firebase";
-import styles from './styles';
+import styles from "./styles";
 import { useEffect, useState } from "react";
 import {
   DocumentData,
   QuerySnapshot,
   collection,
   getDocs,
+  onSnapshot,
+  query,
+  where,
 } from "firebase/firestore";
+import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { filterPatients, getPatients } from "../services/PatientsService";
 
 const HomeScreen = ({ navigation }: any) => {
-
   const [data, setData] = useState<any[]>([]);
   const [search, setSearch] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [onStartup, setOnStartup] = useState<boolean>(true);
+
+  const isOnStartup = false;
 
   useEffect(() => {
-    setIsLoading(true);
-    getDocs<DocumentData>(collection(database, "patients"))
-      .then((docs: QuerySnapshot<DocumentData>) => {
-        let patients: any[] = [];
-        docs.forEach((doc: DocumentData) => {
-          //console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-          //console.log(`${doc.id} => ${doc.data().name}`);
-          const patient = {
-            id: doc.id,
-            name: doc.data().name,
-            cpf: doc.data().cpf,
-          };
-          patients.push(patient);
-        });
-        setData(patients);
-        setIsLoading(false);
-        console.log(patients);
-      })
-      .catch((e) => {
-        setIsLoading(false);
-        setError(true);
-        console.log("Home, getUsers: " + e);
-      });
+    getAllPatients();
   }, []);
-
 
   //COMPONENTES PARA EXIBIR MENSAGEM DE ERRO E INDICADOR DE LOADING
   if (isLoading) {
@@ -86,11 +71,31 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
-  	  //funcao de teste, no momento, mas quando implementada
+  //funcao de teste, no momento, mas quando implementada
   //terá a responsabilidade de filtrar pacientes pelo nome
   //Obs: ignore esse nome.
   const routeUser = ({ item }: any) => {
     console.log("RouteUser");
+  };
+
+  const getAllPatients = () => {
+    //verificando se este método está sendo chamado no startup do componente e
+    //caso esteja sendo chamado será exibido o loading, caso contrario nao será
+    //exibido o loading
+    if (onStartup) {
+      setIsLoading(true);
+      setOnStartup(false);
+    }
+    getPatients()
+      .then((patients: any) => {
+        setData(patients);
+        setIsLoading(false);
+      })
+      .catch((error: any) => {
+        console.log(error);
+        setIsLoading(false);
+        setError(true);
+      });
   };
 
   //Cada item é um objeto USER.
@@ -103,19 +108,25 @@ const HomeScreen = ({ navigation }: any) => {
   //esta funcao/componente é referenciada em 'renderItem'
   const Item = ({ item, onPress }: any) => {
     return (
-      <TouchableOpacity
-        style={styles.listItem}
-        onPress={onPress}
-      >
-        <View
-          style={styles.wrapper_icon_text}
-        >
-          <Ionicons style={{alignSelf:"center"}} name="person" size={24} color="black" />
-          <View style={{ marginLeft: 30 }}>
-            <Text style={styles.textName}>{item.name}</Text>
-          </View>
+      <View style={styles.wrapperIconTextBtnLoadResults}>
+        <Ionicons
+          style={{
+            alignSelf: "center",
+            // borderWidth: 1,
+            // borderStyle: "solid",
+            // borderColor: "#ff5555",
+          }}
+          name="person"
+          size={24}
+          color="black"
+        />
+        <View style={styles.wrapperText}>
+          <Text style={styles.textName}>{item.name}</Text>
         </View>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.btnLoadResults} onPress={onPress}>
+          <AntDesign name="right" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -127,6 +138,14 @@ const HomeScreen = ({ navigation }: any) => {
       <TextInput
         style={styles.input}
         onChangeText={(s) => {
+          //se o input estiver em branco me traga a lista de pacientes
+          if (s == "") {
+            getAllPatients();
+          }
+          filterPatients(s).then((filteredPatients) => {
+            console.log(filteredPatients);
+            setData(filteredPatients);
+          });
           setSearch(s);
         }}
         autoCapitalize="none"
