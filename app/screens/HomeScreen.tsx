@@ -11,20 +11,10 @@ import {
   Dimensions,
 } from "react-native";
 import { signOut } from "firebase/auth";
-import { auth, database } from "@config/firebase";
+import { auth } from "@config/firebase";
 import styles from "./styles";
 import { useEffect, useState } from "react";
-import {
-  DocumentData,
-  QuerySnapshot,
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
 import { AntDesign } from "@expo/vector-icons";
-import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { filterPatients, getPatients } from "../services/PatientsService";
 
@@ -72,7 +62,8 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   //funcao de teste, no momento, mas quando implementada
-  //terá a responsabilidade de filtrar pacientes pelo nome
+  //terá a responsabilidade de carregar a tela de listagem
+  //de pacientes
   //Obs: ignore esse nome.
   const routeUser = ({ item }: any) => {
     console.log("RouteUser");
@@ -92,7 +83,6 @@ const HomeScreen = ({ navigation }: any) => {
         setIsLoading(false);
       })
       .catch((error: any) => {
-        console.log(error);
         setIsLoading(false);
         setError(true);
       });
@@ -132,32 +122,89 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}
+      style={{
+        flex: 1,
+        alignItems: "center",
+        backgroundColor: "white",
+        // borderWidth: 5,
+        // borderStyle: "solid",
+        // borderColor: "#f900dd",
+      }}
     >
       <Text style={styles.header}>Pacientes</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(s) => {
-          //se o input estiver em branco me traga a lista de pacientes
-          if (s == "") {
-            getAllPatients();
-          }
-          filterPatients(s).then((filteredPatients) => {
-            console.log(filteredPatients);
-            setData(filteredPatients);
-          });
-          setSearch(s);
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignItems: "center",
         }}
-        autoCapitalize="none"
-        value={search}
-        placeholder="Pesquise aqui..."
-      />
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.flatList}
-      />
+      >
+        <TextInput
+          style={styles.input}
+          onChangeText={(s) => {
+            //se o input estiver em branco me traga a lista de pacientes
+            if (s == "") {
+              getAllPatients();
+            }
+            setSearch(s);
+          }}
+          autoCapitalize="none"
+          value={search}
+          placeholder="Pesquise aqui..."
+        />
+        <AntDesign
+          onPress={async () =>
+            await filterPatients(search).then((patients) => {
+              setData(patients);
+            })
+          }
+          name="search1"
+          size={24}
+          color="black"
+          style={{
+            marginLeft: 10,
+          }}
+        />
+      </View>
+      <View
+        style={{
+          // borderWidth: 5,
+          // borderStyle: "solid",
+          // borderColor: "#ABCDEF",
+          height: Dimensions.get("window").height - 220,
+        }}
+      >
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.flatList}
+        />
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignSelf: "flex-end",
+          marginTop: 10,
+          // borderWidth: 5,
+          // borderStyle: "solid",
+          // borderColor: "#abcdff",
+          width: Dimensions.get("screen").width / 4,
+        }}
+      >
+        <AntDesign
+          style={{
+            flexDirection: "row",
+            // borderWidth: 5,
+            // borderStyle: "solid",
+            // borderColor: "#ABCDEF",
+          }}
+          name="pluscircle"
+          size={50}
+          color="green"
+        />
+      </View>
+
       {/* <Button title="Log out" onPress={logout} />
       <Button title="Go Back" onPress={() => navigation.navigate('Authentication')} /> */}
     </SafeAreaView>
