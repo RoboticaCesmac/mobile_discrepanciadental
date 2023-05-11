@@ -1,39 +1,31 @@
 import { database } from "@config/firebase";
 import {
   DocumentData,
-  QuerySnapshot,
   collection,
+  endAt,
   getDocs,
-  onSnapshot,
+  orderBy,
   query,
-  where,
+  startAt,
 } from "firebase/firestore";
 
-
 export const filterPatients = async (s: string): Promise<any[]> => {
-    //console.log("HomeScreen, filterPatient " + " => " + s);
     const filteredPatients: any[] = [];
 
     //colletion ref
     const colRef = collection(database, "patients");
 
     //query
-    const q = query(colRef, where("name", ">=", s));
+    const q = query(colRef,orderBy('name'), startAt(s), endAt(s+'\uf8ff') );
 
-    //real time collection data
-    onSnapshot(q, (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        console.log(doc.data());
-        filteredPatients.push({ ...doc.data(), id: doc.id });
-      });
-    });
+    //running the query
+    const querySnapshot = await getDocs(q);
 
-    return new Promise<any[]>((resolve, reject) => {
-        //no error handling here, since onSnapshot() doesn't reject
-        //just resolve with the filteredPatients array
-
-        resolve(filteredPatients);
-    });
+    //manipulating the query result
+    querySnapshot.forEach( (doc) => {
+      filteredPatients.push({ ...doc.data(), id: doc.id });
+    })
+    return filteredPatients;
   };
 
 
