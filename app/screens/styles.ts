@@ -39,12 +39,15 @@ export const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: "#eeeee4",
-        width: 343,
+        width: Dimensions.get('window').width - 100,
         height: 54,
         paddingHorizontal: 20,
         borderRadius: 10,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        // borderWidth: 5,
+        // borderStyle: "solid",
+        // borderColor: "orange",
     },
     submitButton:{
         justifyContent: "center",
@@ -109,17 +112,11 @@ export const styles = StyleSheet.create({
     textName: {
         fontSize: 15,
         fontWeight: '700',
-        // borderWidth: 1,
-        // borderStyle: "solid",
-        // borderColor: "#f901111"
       },
     flatList: {
         justifyContent: "flex-start",
         flexDirection: "column",
         alignContent: 'space-between',
-        // borderWidth: 5,
-        // borderStyle: "solid",
-        // borderColor: "#ff9494",
         alignItems: "center",
         width: Dimensions.get("window").width - 120,
     },
@@ -138,9 +135,9 @@ export const styles = StyleSheet.create({
         justifyContent: "space-around",
         backgroundColor:'#D9D9D9',
         borderRadius: 10,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "#000000",
+        // borderWidth: 1,
+        // borderStyle: "solid",
+        // borderColor: "#ff0000",
         width: Dimensions.get("window").width - 120,
         marginBottom: 10,
     },
@@ -150,7 +147,7 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         // borderWidth: 1,
         // borderStyle: "solid",
-        // borderColor: "orange",
+        // borderColor: "#ffff00",
         height: 70,
         width: Dimensions.get("window").width / 3
     }
