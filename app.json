@@ -12,7 +12,7 @@
       "backgroundColor": "#ffffff"
     },
     "androidStatusBar": {
-      "backgroundColor": "#C2185B",
+      "backgroundColor": "#ffffff",
       "hidden": true
     },
     "androidNavigationBar": {
