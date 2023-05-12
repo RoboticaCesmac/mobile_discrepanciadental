@@ -4,6 +4,7 @@ import {
   collection,
   endAt,
   getDocs,
+  onSnapshot,
   orderBy,
   query,
   startAt,
@@ -19,12 +20,14 @@ export const filterPatients = async (s: string): Promise<any[]> => {
     const q = query(colRef,orderBy('name'), startAt(s), endAt(s+'\uf8ff') );
 
     //running the query
-    const querySnapshot = await getDocs(q);
+     //**real time collection data**
+     onSnapshot(q, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        console.log(doc.data());
+        filteredPatients.push({ ...doc.data(), id: doc.id });
+      });
+    });
 
-    //manipulating the query result
-    querySnapshot.forEach( (doc) => {
-      filteredPatients.push({ ...doc.data(), id: doc.id });
-    })
     return filteredPatients;
   };
 
