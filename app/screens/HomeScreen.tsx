@@ -171,7 +171,7 @@ const HomeScreen = ({ navigation }: any) => {
           // borderWidth: 5,
           // borderStyle: "solid",
           // borderColor: "#ABCDEF",
-          height: Dimensions.get("window").height - 220,
+          height: Dimensions.get("window").height - 230,
         }}
       >
         <FlatList
@@ -185,7 +185,7 @@ const HomeScreen = ({ navigation }: any) => {
         style={{
           flexDirection: "row",
           alignSelf: "flex-end",
-          marginTop: 10,
+          marginTop: 5,
           // borderWidth: 5,
           // borderStyle: "solid",
           // borderColor: "#abcdff",
