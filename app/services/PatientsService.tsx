@@ -1,6 +1,8 @@
 import { database } from "@config/firebase";
 import {
   DocumentData,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
   collection,
   endAt,
   getDocs,
@@ -30,26 +32,4 @@ export const filterPatients = async (s: string): Promise<any[]> => {
 
     return filteredPatients;
   };
-
-
-export const getPatients = async (): Promise<any[]>  => {
-    try {
-      const docs = await getDocs<DocumentData>(collection(database, "patients"));
-      let patients: any[] = [];
-      docs.forEach((doc: DocumentData) => {
-        const patient = {
-          id: doc.id,
-          name: doc.data().name,
-          cpf: doc.data().cpf,
-        };
-        patients.push(patient);
-      });
-      return patients;
-    } catch (error: any) {
-      console.log("Home, getUsers: " + error);
-      return error;
-    }
-};
-
-
 
