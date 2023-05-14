@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { RegisterPatientScreen } from '@screens/RegisterPatient/RegisterPatientScreen';
 import { RegisterScreen } from '@screens/RegisterScreen';
 import { LoadingScreen, AuthenticationScreen, HomeScreen } from "@screens/index";
 
@@ -9,6 +10,7 @@ export type RootStackParamList = {
     Register: undefined;
     Loading: undefined;
     Home:  undefined;
+    RegisterPatient:  undefined;
 };
 
 export default function MainNavigation() {
@@ -45,6 +47,14 @@ export default function MainNavigation() {
                     component={HomeScreen} 
                     options={{
                         title: "Home",
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name='RegisterPatient'
+                    component={RegisterPatientScreen}
+                    options={{
+                        title: "Cadastrar Paciente",
                         headerShown: false
                     }}
                 />
