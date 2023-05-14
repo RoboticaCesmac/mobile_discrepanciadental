@@ -201,7 +201,7 @@ const HomeScreen = ({ navigation }: any) => {
           }}
           name="pluscircle"
           size={50}
-          color="green"
+          color="#357180"
         />
       </View>
 
