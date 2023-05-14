@@ -121,7 +121,7 @@ const HomeScreen = ({ navigation }: any) => {
           color="black"
         />
         <View style={styles.wrapperText}>
-          <Text style={styles.textName}>{item.name}</Text>
+          <Text style={styles.textName}>{item.firstName + ' ' + item.surName}</Text>
         </View>
         <TouchableOpacity style={styles.btnLoadResults} onPress={onPress}>
           <AntDesign name="right" size={24} color="black" />
