@@ -19,13 +19,12 @@ export const filterPatients = async (s: string): Promise<any[]> => {
     const colRef = collection(database, "patients");
 
     //query
-    const q = query(colRef,orderBy('name'), startAt(s), endAt(s+'\uf8ff') );
+    const q = query(colRef,orderBy('firstName','asc'), startAt(s), endAt(s+'\uf8ff') );
 
     //running the query
      //**real time collection data**
      onSnapshot(q, (snapshot) => {
       snapshot.docs.forEach((doc) => {
-        console.log(doc.data());
         filteredPatients.push({ ...doc.data(), id: doc.id });
       });
     });
