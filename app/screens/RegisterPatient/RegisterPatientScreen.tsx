@@ -24,14 +24,34 @@ interface FormValues {
 
 const RegisterPatientScreen = ({ navigation }: Props) => {
 
+  const registerNewUser = async (credentials: FormValues) => {
+    console.log(credentials);
 
+    //verifica se existe algum paciente com o email recebido como parametro
+    emailExists(credentials.email)
+      .then( async (boo) => {
+        if(boo){
+          Alert.alert('Email Inválido','Já existe um paciente cadastrado com este email, por favor use outro email.')
+        }
+        else{
+          const docRef = await addDoc(collection(database, "patients"), {
+            firstName: credentials.firstName,
+            surName: credentials.surName,
+            email:credentials.email
+          });
+          console.log(docRef)
+          navigation.navigate("Home");
+        }
+    });
+
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cadastrar Paciente</Text>
       <Formik
         initialValues={{ firstName: "", surName: "", email: "" }}
-        onSubmit={() => {}}
+        onSubmit={registerNewUser}
         validationSchema={RegisterPatientValidation}
       >
         {({
