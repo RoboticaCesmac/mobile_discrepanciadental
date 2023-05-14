@@ -35,8 +35,8 @@ const RegisterPatientScreen = ({ navigation }: Props) => {
         }
         else{
           const docRef = await addDoc(collection(database, "patients"), {
-            firstName: credentials.firstName,
-            surName: credentials.surName,
+            firstName: credentials.firstName.trim(),
+            surName: credentials.surName.trim(),
             email:credentials.email
           });
           console.log(docRef)
