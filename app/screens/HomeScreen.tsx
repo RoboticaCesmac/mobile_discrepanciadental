@@ -209,6 +209,9 @@ const HomeScreen = ({ navigation }: any) => {
             // borderStyle: "solid",
             // borderColor: "#ABCDEF",
           }}
+          onPress={() => {
+            navigation.navigate("RegisterPatient");
+          }}
           name="pluscircle"
           size={50}
           color="green"
