@@ -11,12 +11,13 @@ import {
   Dimensions,
 } from "react-native";
 import { signOut } from "firebase/auth";
-import { auth } from "@config/firebase";
+import { auth, database } from "@config/firebase";
 import styles from "./styles";
 import { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { filterPatients, getPatients } from "../services/PatientsService";
+import { filterPatients } from "../services/PatientsService";
+import { DocumentData, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot } from "firebase/firestore";
 
 const HomeScreen = ({ navigation }: any) => {
   const [data, setData] = useState<any[]>([]);
@@ -70,22 +71,31 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const getAllPatients = () => {
-    //verificando se este método está sendo chamado no startup do componente e
-    //caso esteja sendo chamado será exibido o loading, caso contrario nao será
-    //exibido o loading
-    if (onStartup) {
-      setIsLoading(true);
-      setOnStartup(false);
-    }
-    getPatients()
-      .then((patients: any) => {
-        setData(patients);
+    try {
+        if (onStartup) {
+          setIsLoading(true);
+          setOnStartup(false);
+        }
+        const patientsCollectionRef = collection(database, "patients");
+        onSnapshot(patientsCollectionRef,
+        (snapshot: QuerySnapshot<DocumentData>) => {
+        let patients: any[] = [];
+        snapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+          const patient = {
+            id: doc.id,
+            firstName: doc.data().firstName,
+            surName: doc.data().surName,
+          };
+          patients.push(patient);
+          setData(patients);
+        });
         setIsLoading(false);
       })
-      .catch((error: any) => {
-        setIsLoading(false);
+    }catch (error: any) {
         setError(true);
-      });
+        console.log("Home, getUsers: " + error);
+        return error;
+    }
   };
 
   //Cada item é um objeto USER.
@@ -171,7 +181,7 @@ const HomeScreen = ({ navigation }: any) => {
           // borderWidth: 5,
           // borderStyle: "solid",
           // borderColor: "#ABCDEF",
-          height: Dimensions.get("window").height - 230,
+          height: Dimensions.get("window").height - 220,
         }}
       >
         <FlatList
@@ -185,7 +195,7 @@ const HomeScreen = ({ navigation }: any) => {
         style={{
           flexDirection: "row",
           alignSelf: "flex-end",
-          marginTop: 5,
+          marginTop: 10,
           // borderWidth: 5,
           // borderStyle: "solid",
           // borderColor: "#abcdff",
