@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, Alert, StatusBar } from 'react-native';
 import { Formik } from "formik";
 import FormField from "@components/FormField";
 import { AuthValidation } from "./Validation";
@@ -8,8 +8,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigations/StackContainer";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { useEffect } from "react";
-import * as NavigationBar from "expo-navigation-bar";
+import { useEffect } from 'react';
 import { displayNavigationBar } from '../helpers/displayNavigationBar';
 
 type AuthScreenNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -26,10 +25,7 @@ interface FormValues {
 const AuthenticationScreen = ({ navigation }: Props) => {
   useEffect(() => {
     displayNavigationBar();
-
   }, []);
-
-
   const handleAuth = (values: FormValues) => {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then(() => navigation.navigate("Home"))
@@ -116,9 +112,8 @@ const AuthenticationScreen = ({ navigation }: Props) => {
           </Text>
         </Text>
       </View>
-      <StatusBar barStyle="dark-content" />
     </View>
   );
 };
 
-export { AuthenticationScreen };
+export { AuthenticationScreen, Props };
