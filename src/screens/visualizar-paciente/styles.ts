@@ -1,22 +1,23 @@
 import { StyleSheet } from "react-native";
+import { background, primaria } from "../../themes/cores";
 
 export const styles = StyleSheet.create({
     content: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#fff",
+        backgroundColor: background,
         justifyContent: "center",
         alignItems: "center"
     },
     container: {
         justifyContent: "flex-start",
         alignItems: "center",
-        overflow: "scroll",
         minWidth: "100%",
-        paddingBottom: 80
+        maxHeight: "100%",
+        flex: 1
     },
     header: {
-        backgroundColor: "#65a194", 
+        backgroundColor: primaria, 
         width: "100%", 
         height: 100, 
         justifyContent: "center", 
@@ -47,32 +48,43 @@ export const styles = StyleSheet.create({
         marginBottom: 20
     },
     botaoResultado: {
-        width: "90%",
-        height: 50, 
-        backgroundColor: "#f0f0f0", 
-        borderRadius: 10, 
-        marginTop: 10, 
-        justifyContent: "space-evenly", 
-        alignItems: "center", 
-        alignSelf: "center",
-        flexDirection: "row"
+        padding: 15,
+        minWidth: "100%",
+        backgroundColor: "#f0f0f0",
+        borderRadius: 10,
+        marginTop: 10,
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    listaResultados: {
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        flex: 1,
+        minWidth: "90%"
     },
     textoBotaoNovoResultado: {
         fontWeight: "bold", 
         color: "#fff", 
-        marginHorizontal: 5
+        marginHorizontal: 5,
+        
     },
     botaoNovoResultado: {
-        backgroundColor: "#65a194", 
+        backgroundColor: primaria, 
         padding: 10, 
         borderRadius: 50, 
         position: "absolute", 
-        bottom: 20
+        bottom: 60,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+
+        elevation: 2,
     },
-    listaResultados: {
-        alignItems: 'center',
-        flex: 1,
-    },
+    
     cardDados:{
         backgroundColor: "#f0f0f0", 
         justifyContent: "space-evenly", 
@@ -80,32 +92,7 @@ export const styles = StyleSheet.create({
         padding: 20, 
         borderRadius: 10, 
         marginTop: 20, 
-        height: 130,
-
         width: "73%",
    
     },
-    cardResultados:{
-        backgroundColor: "#f0f0f0", 
-        justifyContent: "space-evenly", 
-        alignItems: "center", 
-        padding: 20, 
-        width: "90%",
-        margin: 10,
-        marginBottom: 80,
-        flex: 1,
-        borderRadius: 10, 
-        marginTop: 20, 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
-    }
-   
-   
 })

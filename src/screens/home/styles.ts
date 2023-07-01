@@ -1,11 +1,12 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { background } from '../../themes/cores';
 
 export const styles = StyleSheet.create({
     container: {
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: background,
     },
     formContainer: {
         marginBottom: 16,
@@ -63,13 +64,6 @@ export const styles = StyleSheet.create({
         color: "#ffffff",
         fontSize: 16
     },
-    fail:{
-        color: 'white',
-        borderRadius: 5,
-        minHeight: 20,
-        backgroundColor: '#FF0000',
-        paddingTop: 8,
-    },
     textName: {
         fontSize: 15,
         fontWeight: '700',
@@ -90,19 +84,17 @@ export const styles = StyleSheet.create({
         padding: 20,
         alignSelf:'flex-end'
     },
-    wrapperIconTextBtnLoadResults:{
+    botaoPaciente:{
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: 'space-around',
         backgroundColor:'#D9D9D9',
         borderRadius: 10,
-        // borderWidth: 1,
-        // borderStyle: "solid",
-        // borderColor: "#ff0000",
-        width: "85%",
         marginBottom: 10,
+        width: Dimensions.get('window').width * 0.83
     },
     wrapperText:{
+        alignItems: "center",
         paddingLeft: 10,
         flexDirection: "column",
         justifyContent: "center",
@@ -110,7 +102,6 @@ export const styles = StyleSheet.create({
         // borderStyle: "solid",
         // borderColor: "#ffff00",
         height: 70,
-        width: Dimensions.get("window").width / 3
     }
 });
 

@@ -1,7 +1,8 @@
-import React from 'react';
-import { StyleSheet, TextInput, View, Text } from 'react-native';
+import React, { InputHTMLAttributes } from 'react';
+import { StyleSheet, TextInput, View, Text, Keyboard } from 'react-native';
+import { TextInputProps } from 'react-native';
 
-interface FormFieldProps {
+interface FormFieldProps extends TextInputProps {
   label: string;
   value: string;
   placeholder: string;
@@ -9,10 +10,8 @@ interface FormFieldProps {
   onBlur: () => void;
   error?: string;
   secureTextEntry?: boolean | undefined;
-  keyboardType?: string;
-  autoCapitalize?: string;
-  autoCorrect?: boolean;
   maxLength?: number;
+  keyboardType?: any
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -20,6 +19,7 @@ const FormField: React.FC<FormFieldProps> = ({
   value,
   placeholder,
   maxLength,
+  keyboardType,
   onChangeText,
   secureTextEntry = false,
   error,
@@ -34,6 +34,7 @@ const FormField: React.FC<FormFieldProps> = ({
         placeholder={placeholder}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        keyboardType={keyboardType}
       />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>

@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { primaria } from '../../themes/cores';
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,7 +9,17 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#fff",
     },
+    textoHeader: {
+        flex: 1, textAlign: "center", 
+        marginRight:  40, 
+        color: "#fff", 
+        fontSize: 17, 
+        fontWeight: "bold"
+    },
     formContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
         marginBottom: 16,
     },
     title: {
@@ -31,11 +42,22 @@ export const styles = StyleSheet.create({
         padding: "5%",
     },
     header: {
-        textAlign: 'center',
-        fontSize: 32,
-        marginBottom: 10,
-        marginTop: 10,
-        width: Dimensions.get('window').width,
+        backgroundColor: primaria, 
+        width: "100%", 
+        height: 100, 
+        justifyContent: "center", 
+        alignItems: "center", 
+        flexDirection: "row", 
+        paddingHorizontal: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
     },
     input: {
         backgroundColor: "#eeeee4",
@@ -62,7 +84,8 @@ export const styles = StyleSheet.create({
     },
     submitButtonText:{
         color: "#ffffff",
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: "bold"
     },
     fail:{
         color: 'white',

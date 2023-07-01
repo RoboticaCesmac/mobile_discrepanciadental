@@ -103,5 +103,89 @@ export function usarMascara(tipo: any, valor: string): string {
         }
         valorFormatado = stringProcessada;
     }
+    if(tipo === "DATA"){
+        if(ultimoDigito !== "1" && ultimoDigito !== "2" && ultimoDigito !== "3" && ultimoDigito !== "4" && ultimoDigito !== "5" && ultimoDigito !== "6" && ultimoDigito !== "7" && ultimoDigito !== "8" && ultimoDigito !== "9" && ultimoDigito !== "0"){
+            valorFormatado = valorFormatado.slice(0, valorFormatado.length - 1);
+        }
+        if(valorFormatado.length === 3 && valorFormatado.split("/").length === 1){
+            valorFormatado = valorFormatado.slice(0, valorFormatado.length - 1);
+            valorFormatado = valorFormatado + "/" + ultimoDigito;
+        }
+        if(valorFormatado.length === 6 && valorFormatado.split("/").length === 2){
+            valorFormatado = valorFormatado.slice(0, valorFormatado.length - 1);
+            valorFormatado = valorFormatado + "/" + ultimoDigito;
+        }
+
+        // validações extraas de  mês maior que 12, etc
+        if(valorFormatado.length === 2 && parseInt(valorFormatado)>31){
+            valorFormatado = "31";
+        }
+        if(valorFormatado.length === 5 && valorFormatado.split("/").length === 2){
+            if(parseInt(valorFormatado.split("/")[1]) > 12){
+                valorFormatado = valorFormatado[0] + valorFormatado[1] + "/12";
+
+            }
+        }
+        if(valorFormatado.length === 10 && valorFormatado.split("/").length === 3){
+            if(parseInt(valorFormatado.split("/")[2]) < 1900){
+                valorFormatado = valorFormatado[0] + valorFormatado[1] + "/" +valorFormatado[3] + valorFormatado[4] + "/1900";
+            }
+            if(parseInt(valorFormatado.split("/")[2]) > 2200){
+                valorFormatado = valorFormatado[0] + valorFormatado[1] + "/" +valorFormatado[3] + valorFormatado[4] + "/2200";
+            }
+        }
+
+        // essa validação é executada no final caso o usuário digite muito rápido a ponto de não dar tempo de formatar
+        if(valorFormatado.length >= 8 && valorFormatado.split("/").length === 1){
+            valorFormatado = valorFormatado[0] + valorFormatado[1] + "/" +valorFormatado[2] + valorFormatado[3] + "/" + valorFormatado[4] + valorFormatado[5] + valorFormatado[6] + valorFormatado[7];
+            
+            if(valorFormatado.length === 10 && valorFormatado.split("/").length === 3){
+                if(parseInt(valorFormatado.split("/")[1]) > 12){
+                    valorFormatado = valorFormatado.split("/")[0] + "/12/"+ valorFormatado.split("/")[2];
+                }
+                if(parseInt(valorFormatado.split("/")[0]) > 31){
+                    valorFormatado = "31/" + valorFormatado.split("/")[1] + "/" + valorFormatado.split("/")[2];
+                }
+                if(parseInt(valorFormatado.split("/")[2]) < 1900){
+                    valorFormatado = valorFormatado.split("/")[0] + "/" + valorFormatado.split("/")[1] + "/1900";
+                }
+                if(parseInt(valorFormatado.split("/")[2]) > 2200){
+                    valorFormatado = valorFormatado.split("/")[0] + "/" + valorFormatado.split("/")[1] + "/2200";
+                }
+            }
+        }
+
+        //valida meses que acabam no dia 30
+        const meses30 = ["04", "06", "09", "11"]
+        if(parseInt(valorFormatado.split("/")[0]) > 30 && meses30.includes(valorFormatado.split("/")[1])){
+            if(valorFormatado.split("/")[2] != null){
+                valorFormatado = "30/" + valorFormatado.split("/")[1] + "/" + valorFormatado.split("/")[2];
+            }else{
+                valorFormatado = "30/" + valorFormatado.split("/")[1] + "/";
+            }
+        }
+        //valida fevereiro
+        if(parseInt(valorFormatado.split("/")[0]) > 29 && valorFormatado.split("/")[1] == "02"){
+            if(valorFormatado.split("/")[2] != null){
+                valorFormatado = "29/" + valorFormatado.split("/")[1] + "/" + valorFormatado.split("/")[2];     
+            } else{
+                valorFormatado = "29/" + valorFormatado.split("/")[1] + "/";
+            }
+        }
+        //valida fevereiro em ano bissexto
+        if(valorFormatado.split("/")[2] != null){
+            if(valorFormatado.split("/")[2].length === 4){
+                let ano = parseInt(valorFormatado.split("/")[2]);
+                if ((ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 == 0))){
+                    if(parseInt(valorFormatado.split("/")[0]) > 28 && valorFormatado.split("/")[1] == "02"){
+                        valorFormatado = "28/" + valorFormatado.split("/")[1] + "/" + valorFormatado.split("/")[2];            
+                    }
+                }
+            }
+        }
+        
+        
+        
+    }
     return valorFormatado;
 };

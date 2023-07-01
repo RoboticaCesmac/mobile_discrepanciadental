@@ -1,19 +1,22 @@
 import { StyleSheet } from "react-native";
+import { background, primaria } from "../../themes/cores";
 
 export const styles = StyleSheet.create({
     content: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: background,
+        justifyContent: "center",
+        alignContent: "center"
     },
     container: {
         paddingTop: 20,
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
         overflow: "scroll",
         flexGrow: 1
     },
     header: {
-        backgroundColor: "#65a194", 
+        backgroundColor: primaria, 
         width: "100%", 
         height: 100, 
         justifyContent: "center", 
@@ -42,24 +45,14 @@ export const styles = StyleSheet.create({
         fontSize: 20, 
         margin: 15
     },
-    botaoResultado: {
-        width: "80%",
-        height: 80, 
-        backgroundColor: "#ececec", 
-        borderRadius: 10, 
-        marginTop: 10, 
-        justifyContent: "space-evenly", 
-        alignItems: "center", 
-        alignSelf: "center",
-        flexDirection: "row"
-    },
+
     textoBotaoNovoResultado: {
         fontWeight: "bold", 
         color: "#fff", 
         marginHorizontal: 5
     },
     botaoNovoResultado: {
-        backgroundColor: "#65a194", 
+        backgroundColor: primaria, 
         padding: 10, 
         borderRadius: 50, 
         position: "absolute", 
@@ -84,6 +77,11 @@ export const styles = StyleSheet.create({
     },
     subtitulo:{
         fontSize: 10,
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    tituloPicker:{
+        fontSize: 15,
         fontWeight: "bold",
         textAlign: "center"
     },

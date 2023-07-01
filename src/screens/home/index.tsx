@@ -1,35 +1,25 @@
-import {
-    SafeAreaView,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    View,
-    TextInput,
-    ActivityIndicator,
-    Dimensions,
-  } from "react-native";
-
+import { Text, FlatList, TouchableOpacity, View, TextInput, ActivityIndicator, Dimensions } from "react-native";
 import styles from "./styles";
 import { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../navigations";
 import { StackNavigationProp } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView } from "react-native-gesture-handler";
+import IPaciente from "../../models/paciente";
   
   export default  function TelaHome(){
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<IPaciente[]>([]);
     const [search, setSearch] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [onStartup, setOnStartup] = useState<boolean>(true);
     const isFocused = useIsFocused();
-    const isOnStartup = false;
   
     useEffect(() => {
+      // AsyncStorage.removeItem('pacientes')
       getAllPatients();
     }, [isFocused]);
   
@@ -42,6 +32,10 @@ import { ScrollView } from "react-native-gesture-handler";
       );
     }
 
+    /**
+     * pesquisa um paciente 
+     * @param valor 
+     */
     const filterPatients = async (valor:string) => {
         valor = valor.toLocaleLowerCase();
         let pacientes:any = await AsyncStorage.getItem('pacientes');
@@ -49,8 +43,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
         let dadosPacientes:any = [];
         if(valor !== ""){
-          for (const item in pacientes) {
-            console.log(pacientes[item].firstName.toLowerCase().includes(valor))
+          for (const item in pacientes) { 
             if(pacientes[item].firstName.toLowerCase().includes(valor)){
               dadosPacientes.push(pacientes[item]);
             }
@@ -66,7 +59,9 @@ import { ScrollView } from "react-native-gesture-handler";
       };
   
   
-  
+    /**
+     * Lista os pacientes
+     */
     const getAllPatients = async() => {
       try {
           if (onStartup) {
@@ -75,45 +70,23 @@ import { ScrollView } from "react-native-gesture-handler";
           }
           let pacientes:any = await AsyncStorage.getItem('pacientes');
           pacientes = JSON.parse(pacientes || "{}");
-          let dadosPacientes = [];
+          let dadosPacientes:IPaciente[] = [];
           for (const item in pacientes) {
-            dadosPacientes.push(pacientes[item])
+            dadosPacientes.push(pacientes[item] as IPaciente)
           }
           setData(dadosPacientes);
           setIsLoading(false);
-
-
-        //   const patientsCollectionRef = collection(database, "patients");
-        //   onSnapshot(patientsCollectionRef,
-        //   (snapshot: QuerySnapshot<DocumentData>) => {
-        //   let patients: any[] = [];
-        //   snapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
-        //     const patient = {
-        //       id: doc.id,
-        //       firstName: doc.data().firstName,
-        //       cpf: doc.data().cpf,
-        //     };
-        //     alert(JSON.stringify(patient))
-        //     patients.push(patient);
-        //     setData(patients);
-        //   });
-          
-        //   setIsLoading(false);
-        // })
       }catch (error: any) {
       }
     };
   
   
     return (
-      <ScrollView
-        contentContainerStyle={{
+      <View
+        style={{
           flex: 1,
           alignItems: "center",
           backgroundColor: "white",
-          // borderWidth: 5,
-          // borderStyle: "solid",
-          // borderColor: "#f900dd",
         }}
       >
         <Text style={styles.header}>Pacientes</Text>
@@ -147,29 +120,26 @@ import { ScrollView } from "react-native-gesture-handler";
         </View>
         <View
           style={{
-            // borderWidth: 5,
-            // borderStyle: "solid",
-            // borderColor: "#ABCDEF",
             height: Dimensions.get("window").height - 230,
+            width: "100%"
           }}
         >
           <FlatList
             data={data}
+            style={{minWidth: "100%"}}
             renderItem={({item})=>(
-                <TouchableOpacity style={styles.wrapperIconTextBtnLoadResults} onPress={()=>navigation.navigate("visualizarpaciente", {id: item.id})}>
+                <TouchableOpacity style={styles.botaoPaciente} onPress={()=>navigation.navigate("visualizarpaciente", {id: item.id})}>
                     <Ionicons
                         style={{
                         alignSelf: "center",
-                        // borderWidth: 1,
-                        // borderStyle: "solid",
-                        // borderColor: "#ff5555",
                         }}
                         name="person"
                         size={24}
                         color="black"
                     />
                     <View style={styles.wrapperText}>
-                        <Text style={styles.textName}>{item.firstName + ' ' + item.cpf}</Text>
+                      <Text style={styles.textName}>{item.nome}</Text>
+                      <Text style={styles.textName}>{item.dataNascimento}</Text>
                     </View>
                 
                     <AntDesign name="right" size={24} color="black" />
@@ -186,19 +156,12 @@ import { ScrollView } from "react-native-gesture-handler";
             alignSelf: "flex-end",
             position: "absolute",
             bottom: 20,
-
-            // borderWidth: 5,
-            // borderStyle: "solid",
-            // borderColor: "#abcdff",
             width: Dimensions.get("screen").width / 4,
           }}
         >
           <AntDesign
             style={{
               flexDirection: "row",
-              // borderWidth: 5,
-              // borderStyle: "solid",
-              // borderColor: "#ABCDEF",
             }}
             onPress={() => {
               navigation.navigate("cadastrarpaciente");
@@ -208,10 +171,7 @@ import { ScrollView } from "react-native-gesture-handler";
             color="#357180"
           />
         </View>
-  
-        {/* <Button title="Log out" onPress={logout} />
-        <Button title="Go Back" onPress={() => navigation.navigate('Authentication')} /> */}
-      </ScrollView>
+      </View>
     );
   };
   
