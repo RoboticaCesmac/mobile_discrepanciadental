@@ -148,26 +148,33 @@ import { StatusBar } from "expo-status-bar";
         let soma;
         if(campo === "incisivoLateralDireito"){
             soma = parseFloat(valor) + parseFloat(incisivoCentralDireitoAUX) + parseFloat(incisivoCentralEsquerdoAUX) + parseFloat(incisivoLateralEsquerdoAUX);
-        }
-        if(campo === "incisivoCentralDireito"){
+        }else if(campo === "incisivoCentralDireito"){
             soma = parseFloat(incisivoLateralDireitoAUX) + parseFloat(valor) + parseFloat(incisivoCentralEsquerdoAUX) + parseFloat(incisivoLateralEsquerdoAUX);
-        }
-        if(campo === "incisivoCentralEsquerdo"){
+        }else if(campo === "incisivoCentralEsquerdo"){
             soma = parseFloat(incisivoLateralDireitoAUX) + parseFloat(incisivoCentralDireitoAUX) + parseFloat(valor) + parseFloat(incisivoLateralEsquerdoAUX);
-        }
-        if(campo === "incisivoLateralEsquerdo"){
+        }else if(campo === "incisivoLateralEsquerdo"){
             soma = parseFloat(incisivoLateralDireitoAUX) + parseFloat(incisivoCentralDireitoAUX) + parseFloat(incisivoCentralEsquerdoAUX) + parseFloat(valor);
-        }if(campo === "picker"){
+        }
+        
+        let moyers;
+        if(campo === "picker"){
             soma = parseFloat(incisivoLateralDireitoAUX) + parseFloat(incisivoCentralDireitoAUX) + parseFloat(incisivoCentralEsquerdoAUX) + parseFloat(incisivoLateralEsquerdoAUX);
+            if (valor === "superior"){
+                moyers = moyersA;
+            }else{
+                moyers = moyersB;
+            }
+        }else{
+            if (posicao === "superior"){
+                moyers = moyersA;
+            }else{
+                moyers = moyersB;
+            }
         }
         setSomaIncisivos(soma);
 
-        let moyers;
-        if (posicao === "superior"){
-            moyers = moyersA;
-        }else{
-            moyers = moyersB;
-        }
+        
+        
 
         let moyersEncontrado:boolean = false;
         for(let i in moyers){
@@ -289,7 +296,7 @@ import { StatusBar } from "expo-status-bar";
                             selectedValue={posicao}
                             onValueChange={(itemValue, itemIndex) =>{
                                 setPosicao(itemValue);
-                                atualizarER("picker", "picker");
+                                atualizarER("picker", itemValue);
                                 }
                             }
                             >

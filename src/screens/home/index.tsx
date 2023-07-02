@@ -44,7 +44,7 @@ import IPaciente from "../../models/paciente";
         let dadosPacientes:any = [];
         if(valor !== ""){
           for (const item in pacientes) { 
-            if(pacientes[item].firstName.toLowerCase().includes(valor)){
+            if(pacientes[item].nome.toLowerCase().includes(valor)){
               dadosPacientes.push(pacientes[item]);
             }
           }
