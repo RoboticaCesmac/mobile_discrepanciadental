@@ -182,10 +182,7 @@ export function usarMascara(tipo: any, valor: string): string {
                     }
                 }
             }
-        }
-        
-        
-        
+        } 
     }
     return valorFormatado;
 };

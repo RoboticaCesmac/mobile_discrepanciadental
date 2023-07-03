@@ -14,7 +14,7 @@ export default function TelaLogin() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require("../../../assets/logo.png")}></Image>
+      <Image style={{width: 130, height:130, resizeMode: "contain"}} source={require("../../../assets/logo.png")}></Image>
       <Text style={styles.title}>Análise de modelos</Text>
       <Text style={styles.subtitulo}>Dentição mista</Text>
 

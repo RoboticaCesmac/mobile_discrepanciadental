@@ -258,16 +258,16 @@ import { StatusBar } from "expo-status-bar";
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     {imagemModal === "1molar-caninoD" &&
-                        <Image source={require("../../../assets/1molar-caninoD.png")} style={{width:300, resizeMode: "contain"}}/>
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/1molar-caninoD.png")} />
                     }
                     {imagemModal === "1molar-caninoE" &&
-                        <Image source={require("../../../assets/1molar-caninoE.png")} style={{width:300, resizeMode: "contain"}}/>
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/1molar-caninoE.png")} />
                     }
                     {imagemModal === "incisivolat-incisivocentD" &&
-                        <Image source={require("../../../assets/incisivolat-incisivocentD.png")} style={{width:300, resizeMode: "contain"}}/>
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivolat-incisivocentD.png")} />
                     }
                     {imagemModal === "incisivolat-incisivocentE" &&
-                        <Image source={require("../../../assets/incisivolat-incisivocentE.png")} style={{width:300, resizeMode: "contain"}}/>
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivolat-incisivocentE.png")} />
                     }
                     <Pressable
                     style={[styles.button, styles.buttonClose]}

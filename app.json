@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DiscrepanciaDental",
-    "slug": "DiscrepanciaDental",
+    "name": "Análise de modelos",
+    "slug": "AnaliseDeModelos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,7 +29,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "1b3e00ee-48b4-4ef9-8641-5ceda4cf5bea"
+        "projectId": "c9319161-7c14-4b24-9a6c-6c43a674591b"
       }
     }
   }
