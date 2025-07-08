@@ -1,7 +1,7 @@
-import {View, Text, Alert, Modal, Pressable, Image, ActivityIndicator, ToastAndroid,} from "react-native";
+import {TouchableOpacity, View, Text, Alert, Modal, Pressable, Image, ActivityIndicator, ToastAndroid, SafeAreaView, KeyboardAvoidingView, Platform,} from "react-native";
 import { styles } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
-import { RectButton, ScrollView, TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { RectButton, ScrollView, TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from "@react-navigation/native";
@@ -243,7 +243,11 @@ import { StatusBar } from "expo-status-bar";
 
     return (
       
-      <View style={styles.content}>
+      <SafeAreaView style={styles.content}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
         {loading == true &&
           <ActivityIndicator size={100} color="#000000" />
         }
@@ -449,7 +453,7 @@ import { StatusBar } from "expo-status-bar";
                         </View>
                         <View style={styles.containeResultado}>
                             <Text>Resultado</Text>
-                            <Text style={styles.resultado}>{espacoPresente}<Text style={{fontSize: 15}}>mm</Text></Text>
+                            <Text style={styles.resultado}>{espacoPresente.toFixed(1)}<Text style={{fontSize: 15}}>mm</Text></Text>
                         </View>
                     </View>
 
@@ -560,7 +564,7 @@ import { StatusBar } from "expo-status-bar";
                         </View>
                         <View style={styles.containeResultado}>
                             <Text>Resultado</Text>
-                            <Text style={styles.resultado}>{espacoRequerido}<Text style={{fontSize: 15}}>mm</Text></Text>
+                            <Text style={styles.resultado}>{espacoRequerido.toFixed(1)}<Text style={{fontSize: 15}}>mm</Text></Text>
                         </View>
                     </View>
                     
@@ -573,7 +577,8 @@ import { StatusBar } from "expo-status-bar";
             </ScrollView>
           </>
           }
-      </View>
+          </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   };
   

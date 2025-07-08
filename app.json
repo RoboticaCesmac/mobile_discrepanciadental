@@ -15,7 +15,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "buildNumber": "2",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.roboticacesmac.DiscrepanciaDental",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

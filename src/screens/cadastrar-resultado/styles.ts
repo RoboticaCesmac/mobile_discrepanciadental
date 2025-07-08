@@ -4,11 +4,12 @@ import { background, primaria } from "../../themes/cores";
 export const styles = StyleSheet.create({
     content: {
         flex: 1,
-        backgroundColor: background,
+        backgroundColor: primaria,
         justifyContent: "center",
         alignContent: "center"
     },
     container: {
+        backgroundColor: background,
         paddingTop: 20,
         justifyContent: "center",
         alignItems: "center",
@@ -26,8 +27,9 @@ export const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 5,
         },
+        zIndex: 999,
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
 

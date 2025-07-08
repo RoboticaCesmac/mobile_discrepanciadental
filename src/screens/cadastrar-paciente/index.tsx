@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {View, Text, TouchableOpacity, ActivityIndicator, ToastAndroid} from "react-native";
+import {View, Text, TouchableOpacity, ActivityIndicator, ToastAndroid, SafeAreaView, KeyboardAvoidingView, Platform} from "react-native";
 import FormField from "../../components/FormField";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
@@ -59,7 +59,11 @@ export default function TelaCadastrarPaciente() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
       
       {loading == true && <ActivityIndicator size={100} color="#000000" />}
       {loading == false && (
@@ -110,6 +114,7 @@ export default function TelaCadastrarPaciente() {
 
         </>
       )}
-    </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

@@ -1,4 +1,4 @@
-import { Text, FlatList, TouchableOpacity, View, TextInput, ActivityIndicator, Dimensions } from "react-native";
+import { Text, FlatList, TouchableOpacity, View, TextInput, ActivityIndicator, Dimensions, SafeAreaView } from "react-native";
 import styles from "./styles";
 import { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -82,7 +82,7 @@ import IPaciente from "../../models/paciente";
   
   
     return (
-      <View
+      <SafeAreaView
         style={{
           flex: 1,
           alignItems: "center",
@@ -171,7 +171,7 @@ import IPaciente from "../../models/paciente";
             color="#357180"
           />
         </View>
-      </View>
+      </SafeAreaView>
     );
   };
   

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import { styles } from "./styles";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
@@ -13,7 +13,7 @@ export default function TelaLogin() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Image style={{width: 130, height:130, resizeMode: "contain"}} source={require("../../../assets/logo.png")}></Image>
       <Text style={styles.title}>Análise de modelos</Text>
       <Text style={styles.subtitulo}>Dentição mista</Text>
@@ -26,7 +26,7 @@ export default function TelaLogin() {
       </View>
       <Text style={{position: "absolute", bottom: 20}}>{new Date().getFullYear()} - CITEC CESMAC</Text>
       
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

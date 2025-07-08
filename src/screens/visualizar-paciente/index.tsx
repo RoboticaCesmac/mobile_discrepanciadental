@@ -1,8 +1,8 @@
 
-import { View, Text, Alert, ActivityIndicator, ToastAndroid } from "react-native";
+import { View, Text, Alert, ActivityIndicator, ToastAndroid, SafeAreaView, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
-import { FlatList, RectButton, ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, RectButton, ScrollView } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -133,7 +133,7 @@ const TelaVisualizarPaciente = ({ route, navigation }:any) => {
     }
     
   return (
-    <View style={styles.content}>
+    <SafeAreaView style={styles.content}>
       {loading == true &&
         <ActivityIndicator size={100} color="#000000" />
       }
@@ -204,7 +204,7 @@ const TelaVisualizarPaciente = ({ route, navigation }:any) => {
           </View>
         </>
         }
-    </View>
+    </SafeAreaView>
   );
 };
 

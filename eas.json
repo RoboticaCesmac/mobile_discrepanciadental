@@ -3,6 +3,11 @@
     "version": ">= 2.8.0"
   },
   "build": {
+    "simulator": {
+      "ios": {
+        "simulator": true
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
@@ -10,6 +15,9 @@
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "ios": {
+        
       }
     },
     "production": {}

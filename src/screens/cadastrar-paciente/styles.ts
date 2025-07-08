@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { primaria } from '../../themes/cores';
+import { background, primaria } from '../../themes/cores';
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: primaria,
     },
     textoHeader: {
         flex: 1, textAlign: "center", 
@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     },
     formContainer: {
         flex: 1,
+        backgroundColor: background,
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 16,
@@ -52,12 +53,13 @@ export const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 5,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
 
         elevation: 5,
+        zIndex: 999
     },
     input: {
         backgroundColor: "#eeeee4",

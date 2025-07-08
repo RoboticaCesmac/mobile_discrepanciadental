@@ -6,7 +6,6 @@ import TelaHome from "../src/screens/home";
 import TelaCadastrarPaciente from "../src/screens/cadastrar-paciente";
 import { TelaVisualizarPaciente } from "../src/screens/visualizar-paciente";
 import TelaCadastrarResultado from "../src/screens/cadastrar-resultado";
-import TelaCadastro from "../src/screens/cadastro";
 
 const Stack = createStackNavigator();
 
