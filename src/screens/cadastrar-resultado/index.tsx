@@ -92,8 +92,7 @@ import { StatusBar } from "expo-status-bar";
     const mostrarLembrete = async()=>{
         let lembrete:any = await AsyncStorage.getItem("lembrete");
         if(lembrete !== "true"){
-            
-            Alert.alert("Dica", 'Para melhores resultados será necessário utilizar valores decimais como "22.5" ou "22.0".' , [
+            Alert.alert("Dica", 'Utilize apenas uma casa decimal! Ela deve ser igual a 0 ou 5. Exemplo: 5,5 ou 5,0.' , [
                 {
                     text: 'Não exibir novamente',
                     onPress: async() => await AsyncStorage.setItem("lembrete", "true"),
@@ -256,19 +255,47 @@ import { StatusBar } from "expo-status-bar";
                 visible={modalVisivel}
                 onRequestClose={() => setModalVisivel(!modalVisivel)}>
                 <View style={styles.centeredView}>
+                
                 <View style={styles.modalView}>
+                    <Text style={{fontWeight: "bold"}}>Confira a região a ser mensurada!</Text>
                     {imagemModal === "1molar-caninoD" &&
                         <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/1molar-caninoD.png")} />
+                    }
+                    {imagemModal === "1molar-caninoD-inferior" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/1molar-caninoD-inferior.png")} />
                     }
                     {imagemModal === "1molar-caninoE" &&
                         <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/1molar-caninoE.png")} />
                     }
+                    {imagemModal === "1molar-caninoE-inferior" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/1molar-caninoE-inferior.png")} />
+                    }
                     {imagemModal === "incisivolat-incisivocentD" &&
                         <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivolat-incisivocentD.png")} />
+                    }
+                    {imagemModal === "incisivolat-incisivocentD-inferior" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivolat-incisivocentD-inferior.png")} />
                     }
                     {imagemModal === "incisivolat-incisivocentE" &&
                         <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivolat-incisivocentE.png")} />
                     }
+                    {imagemModal === "incisivolat-incisivocentE-inferior" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/icisivolat-incisivocentE-inferior.png")} />
+                    }
+                    {imagemModal === "incisivoLateralD" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivoLateralD.png")} />
+                    }
+                    {imagemModal === "incisivoCentralDireito" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/inicisivoCentralD.png")} />
+                    }
+                     {imagemModal === "incisivoLateralE" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivoLateralE.png")} />
+                    }
+                    {imagemModal === "incisivoCentralEsquerdo" &&
+                        <Image style={{width: 300, height: 300, resizeMode: "contain"}} source={require("../../../assets/incisivoCentralE.png")} />
+                    }
+                    
+                    
                     <Pressable
                     style={[styles.button, styles.buttonClose]}
                     onPress={() => setModalVisivel(false)}>
@@ -325,7 +352,14 @@ import { StatusBar } from "expo-status-bar";
                                 />
                                 <TouchableOpacity>
                                     <Ionicons
-                                        onPress={()=>{setModalVisivel(true); setImagemModal("1molar-caninoD")}}
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            if(posicao == "superior"){
+                                                setImagemModal("1molar-caninoD")
+                                            }else{
+                                                setImagemModal("1molar-caninoD-inferior")
+                                            }
+                                        }}
                                         name="help-circle-outline"
                                         size={20}
                                     />
@@ -345,7 +379,14 @@ import { StatusBar } from "expo-status-bar";
                                 />
                                 <TouchableOpacity>
                                     <Ionicons
-                                        onPress={()=>{setModalVisivel(true); setImagemModal("incisivolat-incisivocentD")}}
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            if(posicao == "superior"){
+                                                setImagemModal("incisivolat-incisivocentD");
+                                            }else{
+                                                setImagemModal("incisivolat-incisivocentD-inferior");
+                                            }
+                                        }}
                                         name="help-circle-outline"
                                         size={20}
                                     />
@@ -365,7 +406,14 @@ import { StatusBar } from "expo-status-bar";
                                 />
                                 <TouchableOpacity>
                                     <Ionicons
-                                        onPress={()=>{setModalVisivel(true); setImagemModal("incisivolat-incisivocentE")}}
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            if(posicao == "superior"){
+                                                setImagemModal("incisivolat-incisivocentE");
+                                            }else{
+                                                setImagemModal("incisivolat-incisivocentE-inferior");
+                                            }
+                                        }}
                                         name="help-circle-outline"
                                         size={20}
                                     />
@@ -385,7 +433,14 @@ import { StatusBar } from "expo-status-bar";
                                 />
                                 <TouchableOpacity>
                                     <Ionicons
-                                        onPress={()=>{setModalVisivel(true); setImagemModal("1molar-caninoE")}}
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            if(posicao == "superior"){
+                                                setImagemModal("1molar-caninoE");
+                                            }else{
+                                                setImagemModal("1molar-caninoE-inferior");
+                                            }
+                                        }}
                                         name="help-circle-outline"
                                         size={20}
                                     />
@@ -405,50 +460,103 @@ import { StatusBar } from "expo-status-bar";
                     <View style={styles.containerEspacoRequerido}>
                         <View style={styles.espacoPresente}>
                             <Text style={styles.subtitulo}>Incisivo lateral direito</Text>
-                            <TextInput
-                                keyboardType="decimal-pad"
-                                style={styles.input}
-                                value={incisivoLateralDireito}
-                                placeholder="0mm"
-                                onChangeText={(valor)=>{
-                                        setIncisivoLateralDireito(valor);
-                                        atualizarER("incisivoLateralDireito", valor);
-                                }}
-                            />
-                            <Text style={styles.subtitulo}>Incisivo central direito</Text>
-                            <TextInput
-                                keyboardType="decimal-pad"
-                                style={styles.input}
-                                value={incisivoCentralDireito}
-                                placeholder="0mm"
-                                onChangeText={(valor)=>{
-                                        setIncisivoCentralDireito(valor);
-                                        atualizarER("incisivoCentralDireito", valor);
-                                }}
-                            />
-                            <Text style={styles.subtitulo}>Incisivo central esquerdo</Text>
-                            <TextInput
-                                keyboardType="decimal-pad"
-                                style={styles.input}
-                                value={incisivoCentralEsquerdo}
-                                placeholder="0mm"
-                                onChangeText={(valor)=>{
-                                        setIncisivoCentralEsquerdo(valor);
-                                        atualizarER("incisivoCentralEsquerdo", valor);
-                                }}
+                            <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <TextInput
+                                    keyboardType="decimal-pad"
+                                    style={styles.input}
+                                    value={incisivoLateralDireito}
+                                    placeholder="0mm"
+                                    onChangeText={(valor)=>{
+                                            setIncisivoLateralDireito(valor);
+                                            atualizarER("incisivoLateralD", valor);
+                                    }}
+                                />
+                                <TouchableOpacity>
+                                    <Ionicons
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            setImagemModal("incisivoLateralD");
+                                        }}
+                                        name="help-circle-outline"
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             
-                            />
+                            <Text style={styles.subtitulo}>Incisivo central direito</Text>
+                            <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <TextInput
+                                    keyboardType="decimal-pad"
+                                    style={styles.input}
+                                    value={incisivoCentralDireito}
+                                    placeholder="0mm"
+                                    onChangeText={(valor)=>{
+                                            setIncisivoCentralDireito(valor);
+                                            atualizarER("incisivoCentralDireito", valor);
+                                    }}
+                                />
+                                <TouchableOpacity>
+                                    <Ionicons
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            setImagemModal("incisivoCentralDireito");
+                                        }}
+                                        name="help-circle-outline"
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            
+                            <Text style={styles.subtitulo}>Incisivo central esquerdo</Text>
+                            <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <TextInput
+                                    keyboardType="decimal-pad"
+                                    style={styles.input}
+                                    value={incisivoCentralEsquerdo}
+                                    placeholder="0mm"
+                                    onChangeText={(valor)=>{
+                                            setIncisivoCentralEsquerdo(valor);
+                                            atualizarER("incisivoCentralEsquerdo", valor);
+                                    }}
+                                
+                                />
+                                <TouchableOpacity>
+                                    <Ionicons
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            setImagemModal("incisivoCentralEsquerdo");
+                                        }}
+                                        name="help-circle-outline"
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            
                             <Text style={styles.subtitulo}>Incisivo lateral esquerdo</Text>
-                            <TextInput
-                                keyboardType="decimal-pad"
-                                style={styles.input}
-                                value={incisivoLateralEsquerdo}
-                                placeholder="0mm"
-                                onChangeText={(valor)=>{
-                                        setIncisivoLateralEsquerdo(valor);
-                                        atualizarER("incisivoLateralEsquerdo", valor);
-                                }}
-                            />
+                            <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <TextInput
+                                    keyboardType="decimal-pad"
+                                    style={styles.input}
+                                    value={incisivoLateralEsquerdo}
+                                    placeholder="0mm"
+                                    onChangeText={(valor)=>{
+                                            setIncisivoLateralEsquerdo(valor);
+                                            atualizarER("incisivoLateralEsquerdo", valor);
+                                    }}
+                                />
+                                <TouchableOpacity>
+                                    <Ionicons
+                                        onPress={()=>{
+                                            setModalVisivel(true); 
+                                            setImagemModal("incisivoLateralE");
+                                        }}
+                                        name="help-circle-outline"
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            
+                           
                         </View>
                         <View style={styles.containeResultado}>
                             <Text>Resultado</Text>

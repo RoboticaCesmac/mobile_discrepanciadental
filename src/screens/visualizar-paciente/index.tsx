@@ -199,7 +199,7 @@ const TelaVisualizarPaciente = ({ route, navigation }:any) => {
       
               
               <RectButton onPress={()=>navigation.navigate("cadastrarresultado", {id: id})} style={styles.botaoNovoResultado}>
-                  <Text style={styles.textoBotaoNovoResultado}>CADASTRAR NOVO RESULTADO</Text>
+                  <Text style={styles.textoBotaoNovoResultado}>REALIZAR NOVA ANÁLISE</Text>
               </RectButton>
           </View>
         </>
